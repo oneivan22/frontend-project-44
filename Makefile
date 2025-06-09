@@ -8,5 +8,11 @@ brain-games:
 publish:
 	npm publish --dry-run
 
+link:
+	npm link
+
 lint:
 	npx eslint .
+
+lint-fix: 
+	npx exlint --fix .
