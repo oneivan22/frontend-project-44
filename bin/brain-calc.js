@@ -8,7 +8,7 @@ const greetUser = () => {
   return name;
 };
 
-const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;// nosonar - not used for security purposes
 
 const getOperation = () => {
   const operations = ['+', '-', '*'];
