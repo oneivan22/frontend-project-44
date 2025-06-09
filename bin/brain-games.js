@@ -1,5 +1,10 @@
 #!/usr/bin/env node
+// ↑ Шебанг (обязательно!) — указывает, что скрипт запускается через Node.js
 
-import greetUser from '../src/cli.js';
+import welcomeUser from '../src/cli.js'
 
-greetUser();
+console.log('Welcome to the Brain Games!')
+
+const name = welcomeUser()
+
+console.log(`Hello, ${name}!`)

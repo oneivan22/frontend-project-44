@@ -1,51 +1,19 @@
 #!/usr/bin/env node
-import readlineSync from 'readline-sync';
+// ↑ Шебанг (обязательно!) — указывает, что скрипт запускается через Node.js
 
-const greetUser = () => {
-  console.log('Welcome to the Brain Games!');
-  const name = readlineSync.question('May I have your name? ');
-  console.log(`Hello, ${name}!`);
-  return name;
-};
+import runGame from '../src/runGame.js'
+import { generationMathOperator, calcNums, generationNumber } from '../src/helpers/helpers.js'
 
-const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+const generateCalcQuestion = () => {
+  const a = generationNumber()
+  const b = generationNumber()
+  const operator = generationMathOperator()
 
-const getOperation = () => {
-  const operations = ['+', '-', '*'];
-  return operations[getRandomInt(0, operations.length - 1)];
-};
+  const question = `${a} ${operator} ${b}`
+  const correctAnswer = String(calcNums(a, b, operator))
 
-const calculate = (num1, num2, operation) => {
-  switch (operation) {
-    case '+':
-      return num1 + num2;
-    case '-':
-      return num1 - num2;
-    case '*':
-      return num1 * num2;
-    default:
-      throw new Error(`Unknown operation: ${operation}`);
-  }
-};
+  return [question, correctAnswer]
+}
 
-const playGame = (name) => {
-  console.log('What is the result of the expression?');
-  for (let i = 0; i < 3; i++) {
-    const num1 = getRandomInt(1, 100);
-    const num2 = getRandomInt(1, 100);
-    const operation = getOperation();
-    const correctAnswer = calculate(num1, num2, operation);
-    console.log(`Question: ${num1} ${operation} ${num2}`);
-    const answer = readlineSync.question('Your answer: ');
-    if (Number(answer) !== correctAnswer) {
-      console.log(`'${answer}' is wrong answer ;(. Correct answer was '${correctAnswer}'.`);
-      console.log(`Let's try again, ${name}!`);
-      return;
-    }
-    console.log('Correct!');
-  }
-  console.log(`Congratulations, ${name}!`);
-};
-
-const name = greetUser();
-playGame(name);
+const description = 'What is the result of the expression?'
+runGame(description, generateCalcQuestion)
