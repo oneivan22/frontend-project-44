@@ -1,37 +1,15 @@
 #!/usr/bin/env node
 
-import readlineSync from 'readline-sync';
+import { isEven, generationNumber } from '../src/helpers/helpers.js';
+import runGame from '../src/runGame.js';
 
-const greetUser = () => {
-  console.log('Welcome to the Brain Games!');
-  const name = readlineSync.question('May I have your name? ');
-  console.log(`Hello, ${name}!`);
-  return name;
-};
+function generateEvenQuestion() {
+  const number = generationNumber();
+  const correctAnswer = isEven(number) ? 'yes' : 'no';
+  const question = String(number);
 
-const isEven = (num) => num % 2 === 0;
+  return [question, correctAnswer];
+}
 
-const playGame = (name) => {
-  console.log('Answer "yes" if the number is even, otherwise answer "no".');
-  
-  for (let i = 0; i < 3; i++) {
-    const num = Math.floor(Math.random() * 100);
-    console.log(`Question: ${num}`);
-    
-    const answer = readlineSync.question('Your answer: ');
-    const correctAnswer = isEven(num) ? 'yes' : 'no';
-    
-    if (answer !== correctAnswer) {
-      console.log(`'${answer}' is wrong answer ;(. Correct answer was '${correctAnswer}'.`);
-      console.log(`Let's try again, ${name}!`);
-      return;
-    }
-    
-    console.log('Correct!');
-  }
-  
-  console.log(`Congratulations, ${name}!`);
-};
-
-const name = greetUser();
-playGame(name);
+const description = 'Answer "yes" if the number is even, otherwise answer "no".';
+runGame(description, generateEvenQuestion);
