@@ -1,19 +1,54 @@
 #!/usr/bin/env node
-// ↑ Шебанг (обязательно!) — указывает, что скрипт запускается через Node.js
 
-import runGame from '../src/runGame.js'
-import { generationMathOperator, calcNums, generationNumber } from '../src/helpers/helpers.js'
+import readlineSync from 'readline-sync';
 
-const generateCalcQuestion = () => {
-  const a = generationNumber()
-  const b = generationNumber()
-  const operator = generationMathOperator()
+const greetUser = () => {
+  console.log('Welcome to the Brain Games!');
+  const name = readlineSync.question('May I have your name? ');
+  console.log(`Hello, ${name}!`);
+  return name;
+};
 
-  const question = `${a} ${operator} ${b}`
-  const correctAnswer = String(calcNums(a, b, operator))
+const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
-  return [question, correctAnswer]
-}
+const getRandomOperator = () => {
+  const operators = ['+', '-', '*'];
+  const index = Math.floor(Math.random() * operators.length);
+  return operators[index];
+};
 
-const description = 'What is the result of the expression?'
-runGame(description, generateCalcQuestion)
+const calculate = (a, b, operator) => {
+  switch (operator) {
+    case '+': return a + b;
+    case '-': return a - b;
+    case '*': return a * b;
+    default: throw new Error(`Unknown operator: ${operator}`);
+  }
+};
+
+const playGame = (name) => {
+  console.log('What is the result of the expression?');
+  
+  for (let i = 0; i < 3; i++) {
+    const a = getRandomInt(1, 100);
+    const b = getRandomInt(1, 100);
+    const operator = getRandomOperator();
+    const correctAnswer = calculate(a, b, operator);
+    
+    console.log(`Question: ${a} ${operator} ${b}`);
+    const answer = Number(readlineSync.question('Your answer: '));
+    
+    if (answer !== correctAnswer) {
+      console.log(`'${answer}' is wrong answer ;(. Correct answer was '${correctAnswer}'.`);
+      console.log(`Let's try again, ${name}!`);
+      return;
+    }
+    
+    console.log('Correct!');
+  }
+  
+  console.log(`Congratulations, ${name}!`);
+};
+
+const name = greetUser();
+playGame(name);

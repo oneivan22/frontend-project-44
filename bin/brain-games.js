@@ -1,10 +1,12 @@
 #!/usr/bin/env node
-// ↑ Шебанг (обязательно!) — указывает, что скрипт запускается через Node.js
 
-import welcomeUser from '../src/cli.js'
+import readlineSync from 'readline-sync';
 
-console.log('Welcome to the Brain Games!')
+const greetUser = () => {
+  console.log('Welcome to the Brain Games!');
+  const name = readlineSync.question('May I have your name? ');
+  console.log(`Hello, ${name}!`);
+  return name;
+};
 
-const name = welcomeUser()
-
-console.log(`Hello, ${name}!`)
+greetUser();

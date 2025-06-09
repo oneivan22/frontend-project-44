@@ -1,19 +1,40 @@
 #!/usr/bin/env node
-// ↑ Шебанг (обязательно!) — указывает, что скрипт запускается через Node.js
 
-import { gcd, generationNumber } from '../src/helpers/helpers.js'
-import runGame from '../src/runGame.js'
+import readlineSync from 'readline-sync';
 
-const generateGcdQuestion = () => {
-  const a = generationNumber()
-  const b = generationNumber()
+const greetUser = () => {
+  console.log('Welcome to the Brain Games!');
+  const name = readlineSync.question('May I have your name? ');
+  console.log(`Hello, ${name}!`);
+  return name;
+};
 
-  const correctAnswer = String(gcd(a, b))
+const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
-  const question = `${a} ${b}`
+const gcd = (a, b) => (b === 0 ? a : gcd(b, a % b));
 
-  return [question, correctAnswer]
-}
+const playGame = (name) => {
+  console.log('Find the greatest common divisor of given numbers.');
+  
+  for (let i = 0; i < 3; i++) {
+    const a = getRandomInt(1, 100);
+    const b = getRandomInt(1, 100);
+    const correctAnswer = gcd(a, b);
+    
+    console.log(`Question: ${a} ${b}`);
+    const answer = Number(readlineSync.question('Your answer: '));
+    
+    if (answer !== correctAnswer) {
+      console.log(`'${answer}' is wrong answer ;(. Correct answer was '${correctAnswer}'.`);
+      console.log(`Let's try again, ${name}!`);
+      return;
+    }
+    
+    console.log('Correct!');
+  }
+  
+  console.log(`Congratulations, ${name}!`);
+};
 
-const description = `Find the greatest common divisor of given numbers.`
-runGame(description, generateGcdQuestion)
+const name = greetUser();
+playGame(name);
