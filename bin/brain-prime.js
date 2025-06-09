@@ -9,13 +9,13 @@ const greetUser = () => {
   return name;
 };
 
-const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;// nosonar - not used for security purposes
 
 const isPrime = (num) => {
   if (num < 2) {
     return false;
   }
-  for (let i = 2; i <= Math.sqrt(num); i++) {
+  for (let i = 2; i <= Math.sqrt(num); i++) {// nosonar - not used for security purposes
     if (num % i === 0) {
       return false;
     }
