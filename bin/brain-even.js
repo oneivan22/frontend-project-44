@@ -14,7 +14,7 @@ const isEven = (num) => num % 2 === 0;
 const playGame = (name) => {
   console.log('Answer "yes" if the number is even, otherwise answer "no".');
   for (let i = 0; i < 3; i++) {
-    const num = Math.floor(Math.random() * 100);// nosonar - not used for security purposes
+    const num = Math.floor(Math.random() * 100);
     console.log(`Question: ${num}`);
     const answer = readlineSync.question('Your answer: ');
     const correctAnswer = isEven(num) ? 'yes' : 'no';
