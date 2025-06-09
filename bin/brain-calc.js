@@ -1,19 +1,56 @@
 #!/usr/bin/env node
-// ↑ Шебанг (обязательно!) — указывает, что скрипт запускается через Node.js
+import readlineSync from 'readline-sync';
+import { generateNumber } from "../src/cli.js";
 
-import runGame from '../src/runGame.js'
-import { generationMathOperator, calcNums, generationNumber } from '../src/helpers/helpers.js'
+const calculator = () => {
+    console.log('Welcome to the Brain Games!');
+    const name = readlineSync.question('May I have your name? ');
+    console.log(`Hello, ${name}!`);
+    console.log('What is the result of the expression?');
 
-const generateCalcQuestion = () => {
-  const a = generationNumber()
-  const b = generationNumber()
-  const operator = generationMathOperator()
+    for (let i = 0; i < 3; i+=1) {
+        const randomNum = generateNumber(1, 30);
+        const randomNum2 = generateNumber(1, 30);
+        let operation = generateNumber(1, 3);
+        
+        switch (operation) {
+            case 1:
+                operation = '+';
+                break;
+            case 2:
+                operation = '-';
+                break;
+            case 3:
+                operation = '*';
+                break;
+        }
 
-  const question = `${a} ${operator} ${b}`
-  const correctAnswer = String(calcNums(a, b, operator))
+        console.log("Question:", `${randomNum} ${operation} ${randomNum2}`);
+        const answer = readlineSync.question('Your answer:');
+        let correctAnswer;
+        
+        switch (operation) {
+            case '+':
+                correctAnswer = randomNum + randomNum2;
+                break;
+            case '-':
+                correctAnswer = randomNum - randomNum2;
+                break;
+            case '*':
+                correctAnswer = randomNum * randomNum2;
+                break;
+        }
 
-  return [question, correctAnswer]
-}
+        if (Number(answer) !== correctAnswer) {
+            console.log(`'${answer}' is wrong answer ;(. Correct answer was '${correctAnswer}'.`);
+            console.log(`Let's try again, ${name}!`);
+            return;
+        }
 
-const description = 'What is the result of the expression?'
-runGame(description, generateCalcQuestion)
+        console.log("Correct!");
+    }
+
+    console.log(`Congratulations, ${name}!`);
+};
+
+calculator();

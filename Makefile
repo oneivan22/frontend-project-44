@@ -3,7 +3,7 @@
 # Установка зависимостей и настройка прав
 install:
 	npm ci
-	chmod +x bin/brain-games.js bin/brain-even.js bin/brain-gcd.js bin/brain-progression.js
+	chmod +x bin/brain-games.js bin/brain-even.js bin/brain-gcd.js bin/brain-progression.js bin/brain-calc.js
 
 # Запуск игр
 brain-games:
@@ -36,4 +36,4 @@ lint:
 	npx eslint .
 
 lint-fix: 
-	npx exlint --fix .
+	npx eslint --fix .
