@@ -1,16 +1,16 @@
 #!/usr/bin/env node
 
-import { gcd, generationNumber } from '../src/helpers/helpers.js';
-import runGame from '../src/runGame.js';
+import { gcd, generationNumber } from '../src/helpers/helpers.js'
+import runGame from '../src/runGame.js'
 
 function generateGcdQuestion() {
-  const firstNumber = generationNumber();
-  const secondNumber = generationNumber();
-  const correctAnswer = String(gcd(firstNumber, secondNumber));
-  const question = `${firstNumber} ${secondNumber}`;
+  const firstNumber = generationNumber()
+  const secondNumber = generationNumber()
+  const correctAnswer = String(gcd(firstNumber, secondNumber))
+  const question = `${firstNumber} ${secondNumber}`
 
-  return [question, correctAnswer];
+  return [question, correctAnswer]
 }
 
-const description = 'Find the greatest common divisor of given numbers.';
-runGame(description, generateGcdQuestion);
+const description = 'Find the greatest common divisor of given numbers.'
+runGame(description, generateGcdQuestion)
